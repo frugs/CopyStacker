@@ -1,0 +1,4 @@
+.localhistory/
+*.suo
+bin/
+obj/
