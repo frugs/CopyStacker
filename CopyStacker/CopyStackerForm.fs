@@ -71,6 +71,7 @@ module Windows =
                             do this.processClipboardEvent(clipboardState, ClipboardEvent.SensitiveCopyEvent)
                         | _ -> () 
                 | WM_DRAWCLIPBOARD -> 
+                    // For some reason we get this message twice when we call Clipboard.SetDataObject, so ignore the first one
                     if ignoreCopy then do ignoreCopy <- false 
                     else do this.processClipboardEvent(clipboardState, ClipboardEvent.CopyEvent)
                 | WM_DESTROY -> ChangeClipboardChain(base.Handle, nextClipboardViewer) |> ignore

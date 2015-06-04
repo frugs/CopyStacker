@@ -30,8 +30,7 @@ module Clipboard =
                 let resultState = { Stack = getClipboardData()::state.Stack }
                 { State = resultState; Actions = [] }
             | SensitiveCopyEvent -> 
-                do () // Sensitive copy not yet implemented
-                { State = state; Actions = [] }
+                { State = state; Actions = [] } // Sensitive copy not yet implemented
             | PastePopEvent -> 
                 match state.Stack with
                     | [] -> { State = state; Actions = [SendPaste] }

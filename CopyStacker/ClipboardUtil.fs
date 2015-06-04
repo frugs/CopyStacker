@@ -52,7 +52,12 @@ module ClipboardUtil =
     let GetClipboardData() =
         let tcs = new TaskCompletionSource<IDataObject>()
         let operation() = 
-            try Clipboard.GetDataObject() |> CopyDataObject |> tcs.SetResult
+            try Clipboard.GetDataObject() 
+                |> fun clipboardData -> 
+                    if clipboardData = null then new DataObject() :> IDataObject
+                    else clipboardData
+                |> CopyDataObject
+                |> tcs.SetResult
             with 
                 | e -> tcs.SetException(e)
         do DoClipboardOp(operation)
